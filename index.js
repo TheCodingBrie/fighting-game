@@ -83,14 +83,14 @@ const player = new Fighter({
       imageSrc: "./assets/player/Jump.png",
       frames: 2,
     },
-    // idle: {
-    //   imageSrc: "./assets/player/Idle.png",
-    //   frames: 8,
-    // },
-    // idle: {
-    //   imageSrc: "./assets/player/Idle.png",
-    //   frames: 8,
-    // },
+    fall: {
+      imageSrc: "./assets/player/Fall.png",
+      frames: 2,
+    },
+    attack1: {
+      imageSrc: "./assets/player/Attack1.png",
+      frames: 6,
+    },
     // idle: {
     //   imageSrc: "./assets/player/Idle.png",
     //   frames: 8,
@@ -127,7 +127,6 @@ function animate() {
 
   // player movement
 
-  player.switchSprites("idle");
   if (KEYS.a.pressed && player.lastKey === "a") {
     player.velocity.x = -5;
     player.switchSprites("run");
@@ -140,6 +139,8 @@ function animate() {
 
   if (player.velocity.y < 0) {
     player.switchSprites("jump");
+  } else if (player.velocity.y > 0) {
+    player.switchSprites("fall");
   }
 
   // enemy movement

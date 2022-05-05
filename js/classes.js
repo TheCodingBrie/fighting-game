@@ -92,8 +92,6 @@ class Fighter extends Sprite {
       sprites[sprite].image = new Image();
       sprites[sprite].image.src = sprites[sprite].imageSrc;
     }
-
-    console.log(this.sprites);
   }
 
   update() {
@@ -106,14 +104,18 @@ class Fighter extends Sprite {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
 
+    // Gravity function
+
     if (this.position.y + this.height + this.velocity.y >= canvas.height - 95) {
       this.velocity.y = 0;
+      this.position.y = 331;
     } else {
       this.velocity.y += GRAVITY;
     }
   }
 
   attack() {
+    this.switchSprites("attack1");
     this.isAttacking = true;
     setTimeout(() => {
       this.isAttacking = false;
@@ -127,7 +129,12 @@ class Fighter extends Sprite {
   }
 
   switchSprites(sprite) {
-    this.frameCurrent = 0;
+    if (
+      this.image === this.sprites.attack1.image &&
+      this.frameCurrent < this.sprites.attack1.frames - 1
+    )
+      return;
+
     switch (sprite) {
       case "idle":
         if (this.image !== this.sprites.idle.image) {
@@ -147,6 +154,20 @@ class Fighter extends Sprite {
         if (this.image !== this.sprites.jump.image) {
           this.image = this.sprites.jump.image;
           this.frames = this.sprites.jump.frames;
+          this.frameCurrent = 0;
+        }
+        break;
+      case "fall":
+        if (this.image !== this.sprites.fall.image) {
+          this.image = this.sprites.fall.image;
+          this.frames = this.sprites.fall.frames;
+          this.frameCurrent = 0;
+        }
+        break;
+      case "attack1":
+        if (this.image !== this.sprites.attack1.image) {
+          this.image = this.sprites.attack1.image;
+          this.frames = this.sprites.attack1.frames;
           this.frameCurrent = 0;
         }
         break;
