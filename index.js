@@ -63,6 +63,39 @@ const player = new Fighter({
     x: 0,
     y: 0,
   },
+  imageSrc: "./assets/player/Idle.png",
+  frames: 8,
+  scale: 2.5,
+  offset: {
+    x: 215,
+    y: 155,
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./assets/player/Idle.png",
+      frames: 8,
+    },
+    run: {
+      imageSrc: "./assets/player/Run.png",
+      frames: 8,
+    },
+    jump: {
+      imageSrc: "./assets/player/Jump.png",
+      frames: 2,
+    },
+    // idle: {
+    //   imageSrc: "./assets/player/Idle.png",
+    //   frames: 8,
+    // },
+    // idle: {
+    //   imageSrc: "./assets/player/Idle.png",
+    //   frames: 8,
+    // },
+    // idle: {
+    //   imageSrc: "./assets/player/Idle.png",
+    //   frames: 8,
+    // },
+  },
 });
 
 const enemy = new Fighter({
@@ -75,10 +108,6 @@ const enemy = new Fighter({
     y: 5,
   },
   color: "blue",
-  offset: {
-    x: -50,
-    y: 0,
-  },
 });
 
 function animate() {
@@ -91,17 +120,26 @@ function animate() {
   shop.update();
 
   player.update();
-  enemy.update();
+  // enemy.update();
 
   player.velocity.x = 0;
   enemy.velocity.x = 0;
 
   // player movement
 
+  player.switchSprites("idle");
   if (KEYS.a.pressed && player.lastKey === "a") {
     player.velocity.x = -5;
+    player.switchSprites("run");
   } else if (KEYS.d.pressed && player.lastKey === "d") {
     player.velocity.x = 5;
+    player.switchSprites("run");
+  } else {
+    player.switchSprites("idle");
+  }
+
+  if (player.velocity.y < 0) {
+    player.switchSprites("jump");
   }
 
   // enemy movement
