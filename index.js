@@ -52,7 +52,7 @@ const shop = new Sprite({
 
 const player = new Fighter({
   position: {
-    x: 0,
+    x: 100,
     y: 0,
   },
   velocity: {
@@ -91,23 +91,63 @@ const player = new Fighter({
       imageSrc: "./assets/player/Attack1.png",
       frames: 6,
     },
-    // idle: {
-    //   imageSrc: "./assets/player/Idle.png",
-    //   frames: 8,
-    // },
+  },
+  attackBox: {
+    offset: {
+      x: 100,
+      y: 50,
+    },
+    width: 150,
+    height: 80,
   },
 });
 
 const enemy = new Fighter({
   position: {
-    x: 400,
-    y: 100,
+    x: 850,
+    y: 0,
   },
   velocity: {
     x: 0,
     y: 5,
   },
-  color: "blue",
+  imageSrc: "./assets/enemy/Idle.png",
+  frames: 4,
+  scale: 2.5,
+  offset: {
+    x: 215,
+    y: 165,
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./assets/enemy/Idle.png",
+      frames: 4,
+    },
+    run: {
+      imageSrc: "./assets/enemy/Run.png",
+      frames: 8,
+    },
+    jump: {
+      imageSrc: "./assets/enemy/Jump.png",
+      frames: 2,
+    },
+    fall: {
+      imageSrc: "./assets/enemy/Fall.png",
+      frames: 2,
+    },
+    attack1: {
+      imageSrc: "./assets/enemy/Attack1.png",
+      frames: 4,
+    },
+  },
+  attackBox: {
+    offset: {
+      x: 0,
+      y: 0,
+    },
+    width: 100,
+    height: 50,
+  },
 });
 
 function animate() {
@@ -120,7 +160,7 @@ function animate() {
   shop.update();
 
   player.update();
-  // enemy.update();
+  enemy.update();
 
   player.velocity.x = 0;
   enemy.velocity.x = 0;
@@ -147,8 +187,18 @@ function animate() {
 
   if (KEYS.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
     enemy.velocity.x = -5;
+    enemy.switchSprites("run");
   } else if (KEYS.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
     enemy.velocity.x = 5;
+    enemy.switchSprites("run");
+  } else {
+    enemy.switchSprites("idle");
+  }
+
+  if (enemy.velocity.y < 0) {
+    enemy.switchSprites("jump");
+  } else if (enemy.velocity.y > 0) {
+    enemy.switchSprites("fall");
   }
 
   // detect for collisions
