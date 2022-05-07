@@ -1,3 +1,5 @@
+// add a pause option
+
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
@@ -266,35 +268,45 @@ animate();
 decreaseTimer();
 
 window.addEventListener("keydown", (event) => {
-  switch (event.key) {
-    case "d":
-      KEYS.d.pressed = true;
-      player.lastKey = "d";
-      break;
-    case "a":
-      KEYS.a.pressed = true;
-      player.lastKey = "a";
-      break;
-    case "w":
-      player.jump();
-      break;
-    case " ":
-      player.attack();
-      break;
-    case "ArrowRight":
-      KEYS.ArrowRight.pressed = true;
-      enemy.lastKey = "ArrowRight";
-      break;
-    case "ArrowLeft":
-      KEYS.ArrowLeft.pressed = true;
-      enemy.lastKey = "ArrowLeft";
-      break;
-    case "ArrowUp":
-      enemy.jump();
-      break;
-    case "ArrowDown":
-      enemy.attack();
-      break;
+  // player action controls
+  if (!player.isDead) {
+    switch (event.key) {
+      case "d":
+        KEYS.d.pressed = true;
+        player.lastKey = "d";
+        break;
+      case "a":
+        KEYS.a.pressed = true;
+        player.lastKey = "a";
+        break;
+      case "w":
+        player.jump();
+        break;
+      case " ":
+        player.attack();
+        break;
+    }
+  }
+
+  // enemy actions controls
+
+  if (!enemy.isDead) {
+    switch (event.key) {
+      case "ArrowRight":
+        KEYS.ArrowRight.pressed = true;
+        enemy.lastKey = "ArrowRight";
+        break;
+      case "ArrowLeft":
+        KEYS.ArrowLeft.pressed = true;
+        enemy.lastKey = "ArrowLeft";
+        break;
+      case "ArrowUp":
+        enemy.jump();
+        break;
+      case "ArrowDown":
+        enemy.attack();
+        break;
+    }
   }
 });
 
