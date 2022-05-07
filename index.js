@@ -231,6 +231,7 @@ function animate() {
     player.isAttacking = false;
     enemy.takeHit();
     document.querySelector("#enemyHealth").style.width = `${enemy.health}%`;
+    document.querySelector("#enemyHealth").style.borderRadius = "0px";
   }
 
   // player misses
@@ -249,6 +250,7 @@ function animate() {
     enemy.isAttacking = false;
     player.takeHit();
     document.querySelector("#playerHealth").style.width = `${player.health}%`;
+    document.querySelector("#playerHealth").style.borderRadius = "0px";
   }
 
   // enemy misses
