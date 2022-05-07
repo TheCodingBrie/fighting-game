@@ -91,6 +91,14 @@ const player = new Fighter({
       imageSrc: "./assets/player/Attack1.png",
       frames: 6,
     },
+    takeHit: {
+      imageSrc: "./assets/player/TakeHit2.png",
+      frames: 4,
+    },
+    death: {
+      imageSrc: "./assets/player/Death.png",
+      frames: 6,
+    },
   },
   attackBox: {
     offset: {
@@ -139,14 +147,22 @@ const enemy = new Fighter({
       imageSrc: "./assets/enemy/Attack1.png",
       frames: 4,
     },
+    takeHit: {
+      imageSrc: "./assets/enemy/TakeHit.png",
+      frames: 3,
+    },
+    death: {
+      imageSrc: "./assets/enemy/Death.png",
+      frames: 7,
+    },
   },
   attackBox: {
     offset: {
-      x: 0,
-      y: 0,
+      x: -160,
+      y: 40,
     },
-    width: 100,
-    height: 50,
+    width: 150,
+    height: 80,
   },
 });
 
@@ -207,22 +223,36 @@ function animate() {
 
   if (
     rectangularCollision({ rectangle1: player, rectangle2: enemy }) &&
-    player.isAttacking
+    player.isAttacking &&
+    player.frameCurrent === 4
   ) {
     player.isAttacking = false;
-    enemy.health -= 20;
+    enemy.takeHit();
     document.querySelector("#enemyHealth").style.width = `${enemy.health}%`;
+  }
+
+  // player misses
+
+  if (player.isAttacking && player.frameCurrent === 4) {
+    player.isAttacking = false;
   }
 
   // enemy attacks
 
   if (
     rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
-    enemy.isAttacking
+    enemy.isAttacking &&
+    enemy.frameCurrent === 2
   ) {
     enemy.isAttacking = false;
-    player.health -= 20;
+    player.takeHit();
     document.querySelector("#playerHealth").style.width = `${player.health}%`;
+  }
+
+  // enemy misses
+
+  if (enemy.isAttacking && enemy.frameCurrent === 2) {
+    enemy.isAttacking = false;
   }
 
   // end game based on health
