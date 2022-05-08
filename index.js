@@ -351,6 +351,12 @@ document.querySelector("#restart").addEventListener("click", () => {
   document.querySelector("#matchResult").style.display = "none";
   document.querySelector("#restart").style.display = "none";
 
+  // reset the timer
+  timer = 60;
+  decreaseTimer();
+
+  // Create new fighter instances
+
   player = new Fighter({
     position: {
       x: 100,
