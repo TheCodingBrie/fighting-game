@@ -1,7 +1,9 @@
-// add a pause option
+// character select
+// reset button
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
+let isPaused = false;
 
 // c = context for the canvas
 // constants for gravity / sprite velocities?
@@ -169,100 +171,109 @@ const enemy = new Fighter({
 });
 
 function animate() {
-  window.requestAnimationFrame(animate);
+  if (!isPaused) {
+    window.requestAnimationFrame(animate);
 
-  c.fillStyle = "black";
-  c.fillRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = "black";
+    c.fillRect(0, 0, canvas.width, canvas.height);
 
-  background.update();
-  shop.update();
+    background.update();
+    shop.update();
 
-  player.update();
-  enemy.update();
+    c.fillStyle = "rgba(255,255,255, 0.15";
+    c.fillRect(0, 0, canvas.width, canvas.height);
 
-  player.velocity.x = 0;
-  enemy.velocity.x = 0;
+    player.update();
+    enemy.update();
 
-  // player movement
+    player.velocity.x = 0;
+    enemy.velocity.x = 0;
 
-  if (KEYS.a.pressed && player.lastKey === "a") {
-    player.velocity.x = -5;
-    player.switchSprites("run");
-  } else if (KEYS.d.pressed && player.lastKey === "d") {
-    player.velocity.x = 5;
-    player.switchSprites("run");
-  } else {
-    player.switchSprites("idle");
-  }
+    // player movement
 
-  if (player.velocity.y < 0) {
-    player.switchSprites("jump");
-  } else if (player.velocity.y > 0) {
-    player.switchSprites("fall");
-  }
+    if (KEYS.a.pressed && player.lastKey === "a") {
+      player.velocity.x = -5;
+      player.switchSprites("run");
+    } else if (KEYS.d.pressed && player.lastKey === "d") {
+      player.velocity.x = 5;
+      player.switchSprites("run");
+    } else {
+      player.switchSprites("idle");
+    }
 
-  // enemy movement
+    if (player.velocity.y < 0) {
+      player.switchSprites("jump");
+    } else if (player.velocity.y > 0) {
+      player.switchSprites("fall");
+    }
 
-  if (KEYS.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
-    enemy.velocity.x = -5;
-    enemy.switchSprites("run");
-  } else if (KEYS.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
-    enemy.velocity.x = 5;
-    enemy.switchSprites("run");
-  } else {
-    enemy.switchSprites("idle");
-  }
+    // enemy movement
 
-  if (enemy.velocity.y < 0) {
-    enemy.switchSprites("jump");
-  } else if (enemy.velocity.y > 0) {
-    enemy.switchSprites("fall");
-  }
+    if (KEYS.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
+      enemy.velocity.x = -5;
+      enemy.switchSprites("run");
+    } else if (KEYS.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
+      enemy.velocity.x = 5;
+      enemy.switchSprites("run");
+    } else {
+      enemy.switchSprites("idle");
+    }
 
-  // detect for collisions
+    if (enemy.velocity.y < 0) {
+      enemy.switchSprites("jump");
+    } else if (enemy.velocity.y > 0) {
+      enemy.switchSprites("fall");
+    }
 
-  // player attacks
+    // detect for collisions
 
-  if (
-    rectangularCollision({ rectangle1: player, rectangle2: enemy }) &&
-    player.isAttacking &&
-    player.frameCurrent === 4
-  ) {
-    player.isAttacking = false;
-    enemy.takeHit();
-    document.querySelector("#enemyHealth").style.width = `${enemy.health}%`;
-    document.querySelector("#enemyHealth").style.borderRadius = "0px";
-  }
+    // player attacks
 
-  // player misses
+    if (
+      rectangularCollision({ rectangle1: player, rectangle2: enemy }) &&
+      player.isAttacking &&
+      player.frameCurrent === 4
+    ) {
+      player.isAttacking = false;
+      enemy.takeHit();
+      gsap.to("#enemyHealth", {
+        width: `${enemy.health}%`,
+      });
+      document.querySelector("#enemyHealth").style.borderRadius = "0px";
+    }
 
-  if (player.isAttacking && player.frameCurrent === 4) {
-    player.isAttacking = false;
-  }
+    // player misses
 
-  // enemy attacks
+    if (player.isAttacking && player.frameCurrent === 4) {
+      player.isAttacking = false;
+    }
 
-  if (
-    rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
-    enemy.isAttacking &&
-    enemy.frameCurrent === 2
-  ) {
-    enemy.isAttacking = false;
-    player.takeHit();
-    document.querySelector("#playerHealth").style.width = `${player.health}%`;
-    document.querySelector("#playerHealth").style.borderRadius = "0px";
-  }
+    // enemy attacks
 
-  // enemy misses
+    if (
+      rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
+      enemy.isAttacking &&
+      enemy.frameCurrent === 2
+    ) {
+      enemy.isAttacking = false;
+      player.takeHit();
+      gsap.to("#playerHealth", {
+        width: `${player.health}%`,
+      });
+      document.querySelector("#playerHealth").style.borderRadius = "0px";
+    }
 
-  if (enemy.isAttacking && enemy.frameCurrent === 2) {
-    enemy.isAttacking = false;
-  }
+    // enemy misses
 
-  // end game based on health
+    if (enemy.isAttacking && enemy.frameCurrent === 2) {
+      enemy.isAttacking = false;
+    }
 
-  if (enemy.health <= 0 || player.health <= 0) {
-    determineWinner({ player, enemy, timerId });
+    // end game based on health
+
+    if (enemy.health <= 0 || player.health <= 0) {
+      determineWinner({ player, enemy, timerId });
+    }
   }
 }
 
@@ -270,8 +281,9 @@ animate();
 decreaseTimer();
 
 window.addEventListener("keydown", (event) => {
-  // player action controls
-  if (!player.isDead) {
+  // player and enemy action controls
+
+  if (!player.isDead && !enemy.isDead) {
     switch (event.key) {
       case "d":
         KEYS.d.pressed = true;
@@ -287,13 +299,6 @@ window.addEventListener("keydown", (event) => {
       case " ":
         player.attack();
         break;
-    }
-  }
-
-  // enemy actions controls
-
-  if (!enemy.isDead) {
-    switch (event.key) {
       case "ArrowRight":
         KEYS.ArrowRight.pressed = true;
         enemy.lastKey = "ArrowRight";
@@ -327,5 +332,15 @@ window.addEventListener("keyup", (event) => {
     case "ArrowLeft":
       KEYS.ArrowLeft.pressed = false;
       break;
+  }
+});
+
+// Pauses the game and the timer
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    isPaused = !isPaused;
+    animate();
+    decreaseTimer();
   }
 });
