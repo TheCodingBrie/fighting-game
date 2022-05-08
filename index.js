@@ -1,6 +1,5 @@
 // character select
-// reset button
-// add boundries
+// Add music / sound effects
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -55,6 +54,66 @@ const shop = new Sprite({
   frames: 6,
 });
 
+// let player = new Fighter({
+//   position: {
+//     x: 100,
+//     y: 0,
+//   },
+//   velocity: {
+//     x: 0,
+//     y: 10,
+//   },
+//   offset: {
+//     x: 0,
+//     y: 0,
+//   },
+//   imageSrc: "./assets/player/Idle.png",
+//   frames: 8,
+//   scale: 2.5,
+//   offset: {
+//     x: 215,
+//     y: 155,
+//   },
+//   sprites: {
+//     idle: {
+//       imageSrc: "./assets/player/Idle.png",
+//       frames: 8,
+//     },
+//     run: {
+//       imageSrc: "./assets/player/Run.png",
+//       frames: 8,
+//     },
+//     jump: {
+//       imageSrc: "./assets/player/Jump.png",
+//       frames: 2,
+//     },
+//     fall: {
+//       imageSrc: "./assets/player/Fall.png",
+//       frames: 2,
+//     },
+//     attack1: {
+//       imageSrc: "./assets/player/Attack1.png",
+//       frames: 6,
+//     },
+//     takeHit: {
+//       imageSrc: "./assets/player/TakeHit2.png",
+//       frames: 4,
+//     },
+//     death: {
+//       imageSrc: "./assets/player/Death.png",
+//       frames: 6,
+//     },
+//   },
+//   attackBox: {
+//     offset: {
+//       x: 100,
+//       y: 50,
+//     },
+//     width: 150,
+//     height: 80,
+//   },
+// });
+
 let player = new Fighter({
   position: {
     x: 100,
@@ -68,41 +127,41 @@ let player = new Fighter({
     x: 0,
     y: 0,
   },
-  imageSrc: "./assets/player/Idle.png",
+  imageSrc: "./assets/huntress/Idle.png",
   frames: 8,
   scale: 2.5,
   offset: {
     x: 215,
-    y: 155,
+    y: 92,
   },
   sprites: {
     idle: {
-      imageSrc: "./assets/player/Idle.png",
+      imageSrc: "./assets/huntress/Idle.png",
       frames: 8,
     },
     run: {
-      imageSrc: "./assets/player/Run.png",
+      imageSrc: "./assets/huntress/Run.png",
       frames: 8,
     },
     jump: {
-      imageSrc: "./assets/player/Jump.png",
+      imageSrc: "./assets/huntress/Jump.png",
       frames: 2,
     },
     fall: {
-      imageSrc: "./assets/player/Fall.png",
+      imageSrc: "./assets/huntress/Fall.png",
       frames: 2,
     },
     attack1: {
-      imageSrc: "./assets/player/Attack1.png",
-      frames: 6,
+      imageSrc: "./assets/huntress/Attack2.png",
+      frames: 5,
     },
     takeHit: {
-      imageSrc: "./assets/player/TakeHit2.png",
-      frames: 4,
+      imageSrc: "./assets/huntress/Take hit.png",
+      frames: 3,
     },
     death: {
-      imageSrc: "./assets/player/Death.png",
-      frames: 6,
+      imageSrc: "./assets/huntress/Death.png",
+      frames: 8,
     },
   },
   attackBox: {
