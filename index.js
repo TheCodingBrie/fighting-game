@@ -1,5 +1,6 @@
 // character select
 // reset button
+// add boundries
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -54,7 +55,7 @@ const shop = new Sprite({
   frames: 6,
 });
 
-const player = new Fighter({
+let player = new Fighter({
   position: {
     x: 100,
     y: 0,
@@ -114,7 +115,7 @@ const player = new Fighter({
   },
 });
 
-const enemy = new Fighter({
+let enemy = new Fighter({
   position: {
     x: 850,
     y: 0,
@@ -338,9 +339,131 @@ window.addEventListener("keyup", (event) => {
 // Pauses the game and the timer
 
 window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
+  if (event.key === "Escape" && !player.isDead && !enemy.isDead) {
     isPaused = !isPaused;
     animate();
     decreaseTimer();
   }
+});
+
+// Restart the game to it's initial state
+document.querySelector("#restart").addEventListener("click", () => {
+  document.querySelector("#matchResult").style.display = "none";
+  document.querySelector("#restart").style.display = "none";
+
+  player = new Fighter({
+    position: {
+      x: 100,
+      y: 0,
+    },
+    velocity: {
+      x: 0,
+      y: 10,
+    },
+    offset: {
+      x: 0,
+      y: 0,
+    },
+    imageSrc: "./assets/player/Idle.png",
+    frames: 8,
+    scale: 2.5,
+    offset: {
+      x: 215,
+      y: 155,
+    },
+    sprites: {
+      idle: {
+        imageSrc: "./assets/player/Idle.png",
+        frames: 8,
+      },
+      run: {
+        imageSrc: "./assets/player/Run.png",
+        frames: 8,
+      },
+      jump: {
+        imageSrc: "./assets/player/Jump.png",
+        frames: 2,
+      },
+      fall: {
+        imageSrc: "./assets/player/Fall.png",
+        frames: 2,
+      },
+      attack1: {
+        imageSrc: "./assets/player/Attack1.png",
+        frames: 6,
+      },
+      takeHit: {
+        imageSrc: "./assets/player/TakeHit2.png",
+        frames: 4,
+      },
+      death: {
+        imageSrc: "./assets/player/Death.png",
+        frames: 6,
+      },
+    },
+    attackBox: {
+      offset: {
+        x: 100,
+        y: 50,
+      },
+      width: 150,
+      height: 80,
+    },
+  });
+
+  enemy = new Fighter({
+    position: {
+      x: 850,
+      y: 0,
+    },
+    velocity: {
+      x: 0,
+      y: 5,
+    },
+    imageSrc: "./assets/enemy/Idle.png",
+    frames: 4,
+    scale: 2.5,
+    offset: {
+      x: 215,
+      y: 165,
+    },
+    sprites: {
+      idle: {
+        imageSrc: "./assets/enemy/Idle.png",
+        frames: 4,
+      },
+      run: {
+        imageSrc: "./assets/enemy/Run.png",
+        frames: 8,
+      },
+      jump: {
+        imageSrc: "./assets/enemy/Jump.png",
+        frames: 2,
+      },
+      fall: {
+        imageSrc: "./assets/enemy/Fall.png",
+        frames: 2,
+      },
+      attack1: {
+        imageSrc: "./assets/enemy/Attack1.png",
+        frames: 4,
+      },
+      takeHit: {
+        imageSrc: "./assets/enemy/TakeHit.png",
+        frames: 3,
+      },
+      death: {
+        imageSrc: "./assets/enemy/Death.png",
+        frames: 7,
+      },
+    },
+    attackBox: {
+      offset: {
+        x: -160,
+        y: 40,
+      },
+      width: 150,
+      height: 80,
+    },
+  });
 });
