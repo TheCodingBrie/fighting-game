@@ -14,13 +14,47 @@
 </head>
 <body>
   <div style="position: relative; display: inline-block">
+    <!--Fighter choice screen-->
+
     <div
+      id="choice"
+      style="
+        position: absolute;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 3em;
+        padding-left: 60px;
+        padding-top: 40px;
+        color: white;
+        display: flex;
+      "
+    >
+      Choose your fighter:
+    </div>
+    <div
+      id="fighters"
+      style="
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      "
+    ></div>
+
+    <div
+      id="interface"
       style="
         position: absolute;
         display: flex;
         align-items: center;
         width: 100%;
         padding: 20px;
+        display: none;
       "
     >
       <!--player health-->

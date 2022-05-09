@@ -20,8 +20,11 @@ class Sprite {
   }
 
   draw() {
-    c.fillStyle = "black";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    // uncomment to see fighters hit boxes
+
+    // c.fillStyle = "black";
+    // c.fillRect(this.position.x, this.position.y, this.width, this.height);
+
     c.drawImage(
       this.image,
       this.frameCurrent * (this.image.width / this.frames),

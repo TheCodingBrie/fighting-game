@@ -6,7 +6,6 @@ const c = canvas.getContext("2d");
 let isPaused = false;
 
 // c = context for the canvas
-// constants for gravity / sprite velocities?
 
 canvas.width = 1024;
 canvas.height = 576;
@@ -52,9 +51,9 @@ const shop = new Sprite({
   frames: 6,
 });
 
-let player = new Fighter(fighters.samurai);
+let player = null;
 
-let enemy = new Fighter(fighters.enemy);
+let enemy = null;
 
 function animate() {
   if (!isPaused) {
@@ -68,114 +67,117 @@ function animate() {
     c.fillStyle = "rgba(255,255,255, 0.15";
     c.fillRect(0, 0, canvas.width, canvas.height);
 
-    player.update();
-    enemy.update();
+    if (player && enemy) {
+      player.update();
+      enemy.update();
 
-    player.velocity.x = 0;
-    enemy.velocity.x = 0;
+      player.velocity.x = 0;
+      enemy.velocity.x = 0;
 
-    // player movement
+      // player movement
 
-    if (KEYS.a.pressed && player.lastKey === "a" && player.position.x >= 0) {
-      player.velocity.x = -5;
-      player.switchSprites("run");
-    } else if (
-      KEYS.d.pressed &&
-      player.lastKey === "d" &&
-      player.position.x <= 1024 - player.width
-    ) {
-      player.velocity.x = 5;
-      player.switchSprites("run");
-    } else {
-      player.switchSprites("idle");
-    }
+      if (KEYS.a.pressed && player.lastKey === "a" && player.position.x >= 0) {
+        player.velocity.x = -5;
+        player.switchSprites("run");
+      } else if (
+        KEYS.d.pressed &&
+        player.lastKey === "d" &&
+        player.position.x <= 1024 - player.width
+      ) {
+        player.velocity.x = 5;
+        player.switchSprites("run");
+      } else {
+        player.switchSprites("idle");
+      }
 
-    if (player.velocity.y < 0) {
-      player.switchSprites("jump");
-    } else if (player.velocity.y > 0) {
-      player.switchSprites("fall");
-    }
+      if (player.velocity.y < 0) {
+        player.switchSprites("jump");
+      } else if (player.velocity.y > 0) {
+        player.switchSprites("fall");
+      }
 
-    // enemy movement
+      // enemy movement
 
-    if (
-      KEYS.ArrowLeft.pressed &&
-      enemy.lastKey === "ArrowLeft" &&
-      enemy.position.x >= 0
-    ) {
-      enemy.velocity.x = -5;
-      enemy.switchSprites("run");
-    } else if (
-      KEYS.ArrowRight.pressed &&
-      enemy.lastKey === "ArrowRight" &&
-      enemy.position.x <= 1024 - enemy.width
-    ) {
-      enemy.velocity.x = 5;
-      enemy.switchSprites("run");
-    } else {
-      enemy.switchSprites("idle");
-    }
+      if (
+        KEYS.ArrowLeft.pressed &&
+        enemy.lastKey === "ArrowLeft" &&
+        enemy.position.x >= 0
+      ) {
+        enemy.velocity.x = -5;
+        enemy.switchSprites("run");
+      } else if (
+        KEYS.ArrowRight.pressed &&
+        enemy.lastKey === "ArrowRight" &&
+        enemy.position.x <= 1024 - enemy.width
+      ) {
+        enemy.velocity.x = 5;
+        enemy.switchSprites("run");
+      } else {
+        enemy.switchSprites("idle");
+      }
 
-    if (enemy.velocity.y < 0) {
-      enemy.switchSprites("jump");
-    } else if (enemy.velocity.y > 0) {
-      enemy.switchSprites("fall");
-    }
+      if (enemy.velocity.y < 0) {
+        enemy.switchSprites("jump");
+      } else if (enemy.velocity.y > 0) {
+        enemy.switchSprites("fall");
+      }
 
-    // detect for collisions
+      // detect for collisions
 
-    // player attacks
+      // player attacks
 
-    if (
-      rectangularCollision({ rectangle1: player, rectangle2: enemy }) &&
-      player.isAttacking &&
-      player.frameCurrent === 4
-    ) {
-      player.isAttacking = false;
-      enemy.takeHit();
-      gsap.to("#enemyHealth", {
-        width: `${enemy.health}%`,
-      });
-      document.querySelector("#enemyHealth").style.borderRadius = "0px";
-    }
+      if (
+        rectangularCollision({ rectangle1: player, rectangle2: enemy }) &&
+        player.isAttacking &&
+        player.frameCurrent === 3
+      ) {
+        player.isAttacking = false;
+        enemy.takeHit();
+        gsap.to("#enemyHealth", {
+          width: `${enemy.health}%`,
+        });
+        document.querySelector("#enemyHealth").style.borderRadius = "0px";
+      }
 
-    // player misses
+      // player misses
 
-    if (player.isAttacking && player.frameCurrent === 4) {
-      player.isAttacking = false;
-    }
+      if (player.isAttacking && player.frameCurrent === 4) {
+        player.isAttacking = false;
+      }
 
-    // enemy attacks
+      // enemy attacks
 
-    if (
-      rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
-      enemy.isAttacking &&
-      enemy.frameCurrent === 2
-    ) {
-      enemy.isAttacking = false;
-      player.takeHit();
-      gsap.to("#playerHealth", {
-        width: `${player.health}%`,
-      });
-      document.querySelector("#playerHealth").style.borderRadius = "0px";
-    }
+      if (
+        rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
+        enemy.isAttacking &&
+        enemy.frameCurrent === 2
+      ) {
+        enemy.isAttacking = false;
+        player.takeHit();
+        gsap.to("#playerHealth", {
+          width: `${player.health}%`,
+        });
+        document.querySelector("#playerHealth").style.borderRadius = "0px";
+      }
 
-    // enemy misses
+      // enemy misses
 
-    if (enemy.isAttacking && enemy.frameCurrent === 2) {
-      enemy.isAttacking = false;
-    }
+      if (enemy.isAttacking && enemy.frameCurrent === 2) {
+        enemy.isAttacking = false;
+      }
 
-    // end game based on health
+      // end game based on health
 
-    if (enemy.health <= 0 || player.health <= 0) {
-      determineWinner({ player, enemy, timerId });
+      if (enemy.health <= 0 || player.health <= 0) {
+        determineWinner({ player, enemy, timerId });
+      }
     }
   }
 }
 
 animate();
-decreaseTimer();
+
+if (player && enemy) decreaseTimer();
 
 window.addEventListener("keydown", (event) => {
   // player and enemy action controls
@@ -256,4 +258,33 @@ document.querySelector("#restart").addEventListener("click", () => {
   player = new Fighter(fighters.knight);
 
   enemy = new Fighter(fighters.enemy);
+});
+
+// Populate fighters choice screen
+
+let fightersArray = [];
+let element;
+
+for (const fighter in fighters) {
+  fightersArray.push(fighter);
+}
+
+fightersArray.map((fighter) => {
+  element = document.createElement("img");
+  element.src = fighters[`${fighter}`].imageSrc;
+  element.style =
+    "width: 150px; border: solid white 4px; border-radius: 10px; background-color: #818cf8";
+  element.id = `${fighter}`;
+  document.querySelector("#fighters").appendChild(element);
+});
+
+document.querySelector("#fighters").addEventListener("click", (event) => {
+  console.log(event.path[0].id);
+  player = new Fighter(fighters[event.path[0].id]);
+  enemy = new Fighter(opponent);
+  document.querySelector("#choice").style.display = "none";
+  document.querySelector("#fighters").style.display = "none";
+  document.querySelector("#interface").style.display = "flex";
+  timer = 60;
+  decreaseTimer();
 });

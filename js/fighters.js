@@ -14,7 +14,7 @@ const fighters = {
       x: 0,
       y: 0,
     },
-    imageSrc: "./assets/samurai/Idle.png",
+    imageSrc: "./assets/samurai/Choice.png",
     frames: 8,
     scale: 2.5,
     offset: {
@@ -69,12 +69,12 @@ const fighters = {
       x: 0,
       y: 10,
     },
-    imageSrc: "./assets/huntress/Idle.png",
+    imageSrc: "./assets/huntress/Choice.png",
     frames: 8,
-    scale: 2.5,
+    scale: 2.9,
     offset: {
-      x: 160,
-      y: 92,
+      x: 190,
+      y: 130,
     },
     sprites: {
       idle: {
@@ -108,11 +108,11 @@ const fighters = {
     },
     attackBox: {
       offset: {
-        x: 100,
-        y: 50,
+        x: 72,
+        y: 30,
       },
-      width: 150,
-      height: 80,
+      width: 100,
+      height: 100,
     },
   },
   knight: {
@@ -124,12 +124,12 @@ const fighters = {
       x: 0,
       y: 10,
     },
-    imageSrc: "./assets/knight/Idle.png",
+    imageSrc: "./assets/knight/Choice.png",
     frames: 10,
-    scale: 2.5,
+    scale: 2.8,
     offset: {
-      x: 160,
-      y: 92,
+      x: 210,
+      y: 130,
     },
     sprites: {
       idle: {
@@ -149,8 +149,8 @@ const fighters = {
         frames: 3,
       },
       attack1: {
-        imageSrc: "./assets/knight/Attack2.png",
-        frames: 7,
+        imageSrc: "./assets/knight/Attack3.png",
+        frames: 8,
       },
       takeHit: {
         imageSrc: "./assets/knight/Take hit.png",
@@ -163,66 +163,67 @@ const fighters = {
     },
     attackBox: {
       offset: {
-        x: 100,
-        y: 50,
+        x: 50,
+        y: 0,
       },
       width: 150,
-      height: 80,
+      height: 150,
     },
   },
-  enemy: {
-    position: {
-      x: 850,
-      y: 0,
+};
+
+const opponent = {
+  position: {
+    x: 850,
+    y: 0,
+  },
+  velocity: {
+    x: 0,
+    y: 5,
+  },
+  imageSrc: "./assets/enemy/Choice.png",
+  frames: 4,
+  scale: 2.5,
+  offset: {
+    x: 215,
+    y: 165,
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./assets/enemy/Idle.png",
+      frames: 4,
     },
-    velocity: {
-      x: 0,
-      y: 5,
+    run: {
+      imageSrc: "./assets/enemy/Run.png",
+      frames: 8,
     },
-    imageSrc: "./assets/enemy/Idle.png",
-    frames: 4,
-    scale: 2.5,
+    jump: {
+      imageSrc: "./assets/enemy/Jump.png",
+      frames: 2,
+    },
+    fall: {
+      imageSrc: "./assets/enemy/Fall.png",
+      frames: 2,
+    },
+    attack1: {
+      imageSrc: "./assets/enemy/Attack1.png",
+      frames: 4,
+    },
+    takeHit: {
+      imageSrc: "./assets/enemy/TakeHit.png",
+      frames: 3,
+    },
+    death: {
+      imageSrc: "./assets/enemy/Death.png",
+      frames: 7,
+    },
+  },
+  attackBox: {
     offset: {
-      x: 215,
-      y: 165,
+      x: -160,
+      y: 40,
     },
-    sprites: {
-      idle: {
-        imageSrc: "./assets/enemy/Idle.png",
-        frames: 4,
-      },
-      run: {
-        imageSrc: "./assets/enemy/Run.png",
-        frames: 8,
-      },
-      jump: {
-        imageSrc: "./assets/enemy/Jump.png",
-        frames: 2,
-      },
-      fall: {
-        imageSrc: "./assets/enemy/Fall.png",
-        frames: 2,
-      },
-      attack1: {
-        imageSrc: "./assets/enemy/Attack1.png",
-        frames: 4,
-      },
-      takeHit: {
-        imageSrc: "./assets/enemy/TakeHit.png",
-        frames: 3,
-      },
-      death: {
-        imageSrc: "./assets/enemy/Death.png",
-        frames: 7,
-      },
-    },
-    attackBox: {
-      offset: {
-        x: -160,
-        y: 40,
-      },
-      width: 150,
-      height: 80,
-    },
+    width: 150,
+    height: 80,
   },
 };
