@@ -1,9 +1,8 @@
-// character select
-// Add music / sound effects
-
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 let isPaused = false;
+let soundtrack = document.createElement("audio");
+soundtrack.src = "./assets/music/soundtrack.wav";
 
 // c = context for the canvas
 
@@ -52,7 +51,6 @@ const shop = new Sprite({
 });
 
 let player = null;
-
 let enemy = null;
 
 function animate() {
@@ -276,7 +274,6 @@ fightersArray.map((fighter) => {
 
 document.querySelector("#fighters").addEventListener("click", (event) => {
   player = new Fighter(fighters[event.path[0].id]);
-  console.log(opponent);
   enemy = new Fighter(opponent);
   document.querySelector("#choice").style.display = "none";
   document.querySelector("#fighters").style.display = "none";
@@ -296,4 +293,6 @@ document.querySelector("#fighters").addEventListener("click", (event) => {
 
   timer = 60;
   decreaseTimer();
+
+  soundtrack.play();
 });
