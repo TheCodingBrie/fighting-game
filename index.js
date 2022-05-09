@@ -11,8 +11,6 @@ let isPaused = false;
 canvas.width = 1024;
 canvas.height = 576;
 
-c.fillRect(0, 0, canvas.width, canvas.height);
-
 const GRAVITY = 0.7;
 
 const KEYS = {
@@ -54,188 +52,15 @@ const shop = new Sprite({
   frames: 6,
 });
 
-// let player = new Fighter({
-//   position: {
-//     x: 100,
-//     y: 0,
-//   },
-//   velocity: {
-//     x: 0,
-//     y: 10,
-//   },
-//   offset: {
-//     x: 0,
-//     y: 0,
-//   },
-//   imageSrc: "./assets/player/Idle.png",
-//   frames: 8,
-//   scale: 2.5,
-//   offset: {
-//     x: 215,
-//     y: 155,
-//   },
-//   sprites: {
-//     idle: {
-//       imageSrc: "./assets/player/Idle.png",
-//       frames: 8,
-//     },
-//     run: {
-//       imageSrc: "./assets/player/Run.png",
-//       frames: 8,
-//     },
-//     jump: {
-//       imageSrc: "./assets/player/Jump.png",
-//       frames: 2,
-//     },
-//     fall: {
-//       imageSrc: "./assets/player/Fall.png",
-//       frames: 2,
-//     },
-//     attack1: {
-//       imageSrc: "./assets/player/Attack1.png",
-//       frames: 6,
-//     },
-//     takeHit: {
-//       imageSrc: "./assets/player/TakeHit2.png",
-//       frames: 4,
-//     },
-//     death: {
-//       imageSrc: "./assets/player/Death.png",
-//       frames: 6,
-//     },
-//   },
-//   attackBox: {
-//     offset: {
-//       x: 100,
-//       y: 50,
-//     },
-//     width: 150,
-//     height: 80,
-//   },
-// });
+let player = new Fighter(fighters.samurai);
 
-let player = new Fighter({
-  position: {
-    x: 100,
-    y: 0,
-  },
-  velocity: {
-    x: 0,
-    y: 10,
-  },
-  offset: {
-    x: 0,
-    y: 0,
-  },
-  imageSrc: "./assets/huntress/Idle.png",
-  frames: 8,
-  scale: 2.5,
-  offset: {
-    x: 215,
-    y: 92,
-  },
-  sprites: {
-    idle: {
-      imageSrc: "./assets/huntress/Idle.png",
-      frames: 8,
-    },
-    run: {
-      imageSrc: "./assets/huntress/Run.png",
-      frames: 8,
-    },
-    jump: {
-      imageSrc: "./assets/huntress/Jump.png",
-      frames: 2,
-    },
-    fall: {
-      imageSrc: "./assets/huntress/Fall.png",
-      frames: 2,
-    },
-    attack1: {
-      imageSrc: "./assets/huntress/Attack2.png",
-      frames: 5,
-    },
-    takeHit: {
-      imageSrc: "./assets/huntress/Take hit.png",
-      frames: 3,
-    },
-    death: {
-      imageSrc: "./assets/huntress/Death.png",
-      frames: 8,
-    },
-  },
-  attackBox: {
-    offset: {
-      x: 100,
-      y: 50,
-    },
-    width: 150,
-    height: 80,
-  },
-});
-
-let enemy = new Fighter({
-  position: {
-    x: 850,
-    y: 0,
-  },
-  velocity: {
-    x: 0,
-    y: 5,
-  },
-  imageSrc: "./assets/enemy/Idle.png",
-  frames: 4,
-  scale: 2.5,
-  offset: {
-    x: 215,
-    y: 165,
-  },
-  sprites: {
-    idle: {
-      imageSrc: "./assets/enemy/Idle.png",
-      frames: 4,
-    },
-    run: {
-      imageSrc: "./assets/enemy/Run.png",
-      frames: 8,
-    },
-    jump: {
-      imageSrc: "./assets/enemy/Jump.png",
-      frames: 2,
-    },
-    fall: {
-      imageSrc: "./assets/enemy/Fall.png",
-      frames: 2,
-    },
-    attack1: {
-      imageSrc: "./assets/enemy/Attack1.png",
-      frames: 4,
-    },
-    takeHit: {
-      imageSrc: "./assets/enemy/TakeHit.png",
-      frames: 3,
-    },
-    death: {
-      imageSrc: "./assets/enemy/Death.png",
-      frames: 7,
-    },
-  },
-  attackBox: {
-    offset: {
-      x: -160,
-      y: 40,
-    },
-    width: 150,
-    height: 80,
-  },
-});
+let enemy = new Fighter(fighters.enemy);
 
 function animate() {
   if (!isPaused) {
     window.requestAnimationFrame(animate);
 
     c.fillStyle = "black";
-    c.fillRect(0, 0, canvas.width, canvas.height);
 
     background.update();
     shop.update();
@@ -422,125 +247,13 @@ document.querySelector("#restart").addEventListener("click", () => {
   document.querySelector("#matchResult").style.display = "none";
   document.querySelector("#restart").style.display = "none";
 
-  // reset the timer
+  // reset the timer for a new game
   timer = 60;
   decreaseTimer();
 
   // Create new fighter instances
 
-  player = new Fighter({
-    position: {
-      x: 100,
-      y: 0,
-    },
-    velocity: {
-      x: 0,
-      y: 10,
-    },
-    offset: {
-      x: 0,
-      y: 0,
-    },
-    imageSrc: "./assets/player/Idle.png",
-    frames: 8,
-    scale: 2.5,
-    offset: {
-      x: 215,
-      y: 155,
-    },
-    sprites: {
-      idle: {
-        imageSrc: "./assets/player/Idle.png",
-        frames: 8,
-      },
-      run: {
-        imageSrc: "./assets/player/Run.png",
-        frames: 8,
-      },
-      jump: {
-        imageSrc: "./assets/player/Jump.png",
-        frames: 2,
-      },
-      fall: {
-        imageSrc: "./assets/player/Fall.png",
-        frames: 2,
-      },
-      attack1: {
-        imageSrc: "./assets/player/Attack1.png",
-        frames: 6,
-      },
-      takeHit: {
-        imageSrc: "./assets/player/TakeHit2.png",
-        frames: 4,
-      },
-      death: {
-        imageSrc: "./assets/player/Death.png",
-        frames: 6,
-      },
-    },
-    attackBox: {
-      offset: {
-        x: 100,
-        y: 50,
-      },
-      width: 150,
-      height: 80,
-    },
-  });
+  player = new Fighter(fighters.knight);
 
-  enemy = new Fighter({
-    position: {
-      x: 850,
-      y: 0,
-    },
-    velocity: {
-      x: 0,
-      y: 5,
-    },
-    imageSrc: "./assets/enemy/Idle.png",
-    frames: 4,
-    scale: 2.5,
-    offset: {
-      x: 215,
-      y: 165,
-    },
-    sprites: {
-      idle: {
-        imageSrc: "./assets/enemy/Idle.png",
-        frames: 4,
-      },
-      run: {
-        imageSrc: "./assets/enemy/Run.png",
-        frames: 8,
-      },
-      jump: {
-        imageSrc: "./assets/enemy/Jump.png",
-        frames: 2,
-      },
-      fall: {
-        imageSrc: "./assets/enemy/Fall.png",
-        frames: 2,
-      },
-      attack1: {
-        imageSrc: "./assets/enemy/Attack1.png",
-        frames: 4,
-      },
-      takeHit: {
-        imageSrc: "./assets/enemy/TakeHit.png",
-        frames: 3,
-      },
-      death: {
-        imageSrc: "./assets/enemy/Death.png",
-        frames: 7,
-      },
-    },
-    attackBox: {
-      offset: {
-        x: -160,
-        y: 40,
-      },
-      width: 150,
-      height: 80,
-    },
-  });
+  enemy = new Fighter(fighters.enemy);
 });

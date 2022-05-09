@@ -20,6 +20,8 @@ class Sprite {
   }
 
   draw() {
+    c.fillStyle = "black";
+    c.fillRect(this.position.x, this.position.y, this.width, this.height);
     c.drawImage(
       this.image,
       this.frameCurrent * (this.image.width / this.frames),
@@ -111,12 +113,12 @@ class Fighter extends Sprite {
 
     // uncomment to see attack boxes
 
-    c.fillRect(
-      this.attackBox.position.x,
-      this.attackBox.position.y,
-      this.attackBox.width,
-      this.attackBox.height
-    );
+    // c.fillRect(
+    //   this.attackBox.position.x,
+    //   this.attackBox.position.y,
+    //   this.attackBox.width,
+    //   this.attackBox.height
+    // );
 
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
