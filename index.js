@@ -248,16 +248,12 @@ window.addEventListener("keydown", (event) => {
 document.querySelector("#restart").addEventListener("click", () => {
   document.querySelector("#matchResult").style.display = "none";
   document.querySelector("#restart").style.display = "none";
+  document.querySelector("#choice").style.display = "flex";
+  document.querySelector("#fighters").style.display = "flex";
+  document.querySelector("#interface").style.display = "none";
 
-  // reset the timer for a new game
-  timer = 60;
-  decreaseTimer();
-
-  // Create new fighter instances
-
-  player = new Fighter(fighters.knight);
-
-  enemy = new Fighter(fighters.enemy);
+  player = null;
+  enemy = null;
 });
 
 // Populate fighters choice screen
@@ -279,12 +275,25 @@ fightersArray.map((fighter) => {
 });
 
 document.querySelector("#fighters").addEventListener("click", (event) => {
-  console.log(event.path[0].id);
   player = new Fighter(fighters[event.path[0].id]);
+  console.log(opponent);
   enemy = new Fighter(opponent);
   document.querySelector("#choice").style.display = "none";
   document.querySelector("#fighters").style.display = "none";
   document.querySelector("#interface").style.display = "flex";
+  document.querySelector("#playerHealth").style.width = `${player.health}%`;
+  document.querySelector("#enemyHealth").style.width = `${enemy.health}%`;
+
+  enemy.position = {
+    x: 850,
+    y: 0,
+  };
+
+  player.position = {
+    x: 100,
+    y: 0,
+  };
+
   timer = 60;
   decreaseTimer();
 });
