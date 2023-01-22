@@ -1,3 +1,5 @@
+// cannot read property of isDead
+
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 let isPaused = false;
@@ -273,7 +275,8 @@ fightersArray.map((fighter) => {
 });
 
 document.querySelector("#fighters").addEventListener("click", (event) => {
-  player = new Fighter(fighters[event.path[0].id]);
+  console.log(event);
+  player = new Fighter(fighters[event.target.id]);
   enemy = new Fighter(opponent);
   document.querySelector("#choice").style.display = "none";
   document.querySelector("#fighters").style.display = "none";
